@@ -1,0 +1,8 @@
+.venv
+.env
+*.parquet
+*.csv
+*.xlsx
+*.txt
+*.pyc
+*.log

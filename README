@@ -61,7 +61,7 @@ pip install -r requirements.txt
 Após a geração, os arquivos ficam disponíveis na pasta data/.
 O próximo passo será o tratamento e padronização com Apache Spark localmente:
 
-Leitura de múltiplos formatos (.parquet, .csv, .xlsx).
+Leitura de múltiplos formatos (.parquet, .csv, .json).
 
 Padronização de schemas (resolvendo nomes alternativos de colunas).
 

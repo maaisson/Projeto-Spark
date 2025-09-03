@@ -62,13 +62,11 @@ if __name__ == "__main__":
     csv_path = settings.RAW_PATH / f"ga_data_{fake.date(pattern='%Y%m%d%H%M%S')}.csv"
     df_csv.to_csv(csv_path, index=False, sep=";")
     
-    #XLSX  
-    df_xlsx = df.sample(frac=0.7).reset_index(drop=True)
-    df_xlsx = df_xlsx.rename(columns={col: random.choice(syns) for col, syns in RAW_COLUMNS_VARIANTS.items()})
-    xlsx_path = settings.RAW_PATH / f"ga_data_{fake.date(pattern='%Y%m%d%H%M%S')}.xlsx"
-    df_xlsx.to_excel(xlsx_path, index=False)
+    #JSON  
+    json_path = settings.RAW_PATH / f"ga_data_{fake.date(pattern='%Y%m%d%H%M%S')}.json"
+    df.to_json(json_path, orient="records", lines=True, force_ascii=False)
 
     print(f"[OK] Gerado {n} registros em:")
     print(f" - Parquet: {parquet_path}")
     print(f" - CSV:     {csv_path}")
-    print(f" - XLSX:    {xlsx_path}")
+    print(f" - JSON:    {json_path}")

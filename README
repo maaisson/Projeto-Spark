@@ -1,0 +1,84 @@
+# Projeto Spark - Geração e Tratamento de Dados GA4
+
+Este projeto tem como objetivo **gerar dados sintéticos** semelhantes ao Google Analytics 4 (GA4) utilizando a biblioteca [Faker](https://faker.readthedocs.io/), exportando-os em diferentes formatos (Parquet, CSV e XLSX).  
+Posteriormente, os dados serão **tratados e padronizados utilizando o Apache Spark localmente**, simulando cenários de ETL com dados "sujos" (valores nulos, schemas divergentes e fontes parciais).
+
+---
+
+## 📂 Estrutura do Projeto
+```
+Projeto-Spark/
+│
+├── generator/ # Código Python para geração dos dados
+│ ├── generate_data.py
+│ └── config/
+│ └── settings.py
+│
+├── logs/ # Saída de logs de execução
+│ └── ga4_generator.log
+│
+├── data/ # Pasta de dados brutos (Raw)
+│ ├── parquet/
+│ ├── csv/
+│ └── xlsx/
+│
+├── .venv/ # Ambiente virtual (Python)
+├── generator.ps1 # Script PowerShell para execução no Windows
+└── README.md
+```
+
+---
+
+## ⚙️ Ambiente Virtual (Windows)
+
+O projeto utiliza uma **virtual environment (venv)** para isolar as dependências.  
+Siga os passos abaixo para criar e ativar:
+
+### 1. Criar a venv
+No diretório raiz do projeto, execute:
+
+```powershell
+python -m venv .venv
+
+2. Ativar a venv
+
+No PowerShell (Windows):
+
+. .\.venv\Scripts\Activate.ps1
+
+Você verá o prefixo (.venv) no terminal, indicando que o ambiente está ativo.
+
+3. Instalar as dependências
+
+Com a venv ativada, instale os pacotes:
+
+pip install -r requirements.txt
+```
+---
+
+## 🔥 Tratamento com Spark Local
+
+Após a geração, os arquivos ficam disponíveis na pasta data/.
+O próximo passo será o tratamento e padronização com Apache Spark localmente:
+
+Leitura de múltiplos formatos (.parquet, .csv, .xlsx).
+
+Padronização de schemas (resolvendo nomes alternativos de colunas).
+
+Tratamento de valores nulos.
+
+Criação de camadas Bronze / Silver / Gold no processo de ETL.
+
+O Spark será configurado em ambiente local (via Docker ou instalação direta) para simular pipelines de dados reais.
+
+## 📌 Tecnologias Utilizadas
+
+Python 3.10+
+
+Faker (geração de dados sintéticos)
+
+Pandas (manipulação e exportação de dados)
+
+Apache Spark (local) (tratamento, padronização e ETL)
+
+PowerShell (automatização no Windows)

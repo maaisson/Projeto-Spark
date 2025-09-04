@@ -6,3 +6,5 @@
 *.pyc
 *.log
 *.json
+*_temporary/
+*/_temporary/*

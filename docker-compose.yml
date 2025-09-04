@@ -1,0 +1,54 @@
+services:
+  spark-master:
+    image: bitnami/spark:3.4.3
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master        # <-- Use environment variable
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+      - ./spark_jobs:/app/spark_jobs
+
+  spark-worker:
+    image: bitnami/spark:3.4.3
+    container_name: spark-worker
+    environment:
+      - SPARK_MODE=worker        # <-- Use environment variable
+      - SPARK_MASTER_URL=spark://spark-master:7077 # <-- Tell worker where the master is
+      - SPARK_WORKER_CORES=4
+      - SPARK_WORKER_MEMORY=12g
+      - SPARK_EXECUTOR_MEMORY=8g # <-- Renamed for Bitnami compatibility
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    depends_on:
+      - spark-master
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+      - ./spark_jobs:/app/spark_jobs
+
+  spark-connect:
+    image: bitnami/spark:3.4.3
+    container_name: spark-connect
+    command: >
+      /opt/bitnami/spark/sbin/start-connect-server.sh
+      --master spark://spark-master:7077
+      --packages org.apache.spark:spark-connect_2.12:3.4.3
+      --conf spark.driver.host=spark-connect
+      --conf spark.driver.bindAddress=0.0.0.0
+    depends_on:
+      - spark-master
+    ports:
+      - "15002:15002"
+    volumes:
+      - ./data:/app/data
+      - ./spark_jobs:/app/spark_jobs

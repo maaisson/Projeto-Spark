@@ -1,0 +1,7 @@
+# Dockerfile.connect
+FROM spark:3.4.3
+
+# Baixar o jar do Spark Connect no build
+RUN mkdir -p /opt/spark/jars && \
+    curl -L https://repo1.maven.org/maven2/org/apache/spark/spark-connect_2.12/3.4.3/spark-connect_2.12-3.4.3.jar \
+    -o /opt/spark/jars/spark-connect_2.12-3.4.3.jar
